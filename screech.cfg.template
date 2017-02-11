@@ -1,0 +1,2 @@
+SECRET_KEY = 'i am so secret, wow'
+CLIENT_NAME = 'https://localhost:5000'

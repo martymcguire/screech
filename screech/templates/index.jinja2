@@ -1,0 +1,16 @@
+{% extends "base.jinja2" %}
+
+{% block body %}
+<div class="container">
+  <form action="{{ url_for('.authorize') }}" method="GET">
+    <input type="hidden" name="scope" value="post" />
+    <div class="row">
+      <div class="six columns">
+        <label for="me">Sign In Using Your Website</label>
+        <input class="ut-full-width" type="text" name="me" placeholder="http://example.com" />
+        <input class="button-primary" type="submit" value="Sign In" />
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

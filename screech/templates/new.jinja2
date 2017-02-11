@@ -1,0 +1,131 @@
+{% extends "base.jinja2" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tokenfield.css') }}">
+<style id="shame">
+  .tokenfield {
+      box-sizing: border-box;
+      margin-bottom: 15px;
+      overflow: hidden;
+  }
+</style>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jsmediatags.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/tokenfield.min.js') }}"></script>
+{% endblock %}
+{% block body %}
+<div class="container">
+      <h2>We Have to Cast</h2>
+      <h3>Logged in as {{ me }}</h3>
+      <form method="POST" enctype="multipart/form-data" action="{{ endpoint }}">
+        <input type="hidden" name="access_token" value="{{ access_token }}" />
+        <input type="hidden" name="h" value="entry" />
+        <div class="row">
+          <div class="two-thirds column">
+            <div class="container">
+              <div class="row">
+                <label for="audio">Audio File</label>
+                <input type="file" name="audio" id="audio" />
+                <audio id="player"></audio>
+              </div>
+              <div class="row">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" class="ut-full-width"/>
+              </div>
+              <div class="row">
+                <label for="content">Content</label>
+                <textarea name="content" id="content" class="ut-full-width"></textarea>
+              </div>
+              <div class="row">
+                <label for="category">Category</label>
+                <input type="text" id="category" class="ut-full-width"/>
+              </div>
+              <div class="row">
+                <label for="slug">Slug</label>
+                <input type="text" name="slug" id="slug" class="ut-full-width"/>
+              </div>
+              <div class="row">
+                <input class="button-primary" type="submit" />
+              </div>
+            </div>
+          </div>
+          <div class="one-third column">
+            <dl id="whta-auto-fields"></dl>
+          </div>
+        </div>
+      </form>
+      <script>
+        document.addEventListener("DOMContentLoaded", function(){
+          function addAutoField(name, label, value) {
+            var par = document.getElementById("whta-auto-fields");
+            var tmpl = `<div>
+                <dt>${label}</dt><dd>${value}</dd>
+                <input type="hidden" name="whta-${name}" value="${value}" />
+              </div>
+            `;
+            var el = document.createElement('div');
+            el.innerHTML = tmpl;
+            par.appendChild(el.firstChild);
+          }
+
+          function secsToDurationString(time) {
+            var mins = ~~(time / 60);
+            var secs = time % 60;
+
+            var hrs = ~~(time / 3600);
+            var mins = ~~((time % 3600) / 60);
+            var secs = ~~(time % 60);
+
+            var ret = "";
+
+            ret += (hrs < 10 ? "0" : "");
+            ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+            ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+            ret += "" + secs;
+            return ret;
+          }
+          var jsmediatags = window.jsmediatags;
+          document.getElementById("player").addEventListener(
+            "canplaythrough",
+            function(e){
+              var duration = secsToDurationString(e.currentTarget.duration);
+              addAutoField("duration","Duration", duration);
+            }
+          );
+          document.getElementById("audio").addEventListener(
+            "change",
+            function(e){
+              var file = event.target.files[0];
+              var objUrl = URL.createObjectURL(file);
+              document.getElementById("player").src = objUrl;
+              console.log(file);
+              jsmediatags.read(file, {
+                onSuccess: function(info) {
+                  console.log(info);
+                  var tags = info.tags;
+                  document.getElementById("name").value = tags.album + ' ' + tags.title;
+                  for (field of ['artist', 'album', 'title', 'track']) {
+                    addAutoField(
+                      field,
+                      field.charAt(0).toUpperCase() + field.slice(1),
+                      tags[field]
+                    );
+                  }
+                  addAutoField("enclosure-length", "Size", file.size);
+                },
+                onError: function(err) {
+                  console.log(err.type, err.info);
+                }
+              });
+            }
+          );
+
+          var tf = new Tokenfield({
+            el: document.getElementById("category"),
+            newItems: true,
+            newItemName: 'category'
+          });
+        });
+      </script>
+    </div>
+</div>
+{% endblock %}
