@@ -8,11 +8,11 @@ api = Blueprint('api', __name__)
 @login_required
 def publish():
     endpoint = session.get('_micropub_endpoint')
-    # TODO: some validation
-    data = request.form.to_dict()
 
-    data['start'] += " " + data['tzoffset']
-    data['end']   += " " + data['tzoffset']
+    # TODO: handle passing along file uploads
+
+    # TODO: data validation
+    data = request.form.to_dict()
 
     headers = { 'Authorization': "Bearer %s" % session.get('_micropub_access_token') }
 

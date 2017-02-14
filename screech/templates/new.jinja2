@@ -16,8 +16,7 @@
 <div class="container">
       <h2>We Have to Cast</h2>
       <h3>Logged in as {{ me }}</h3>
-      <form method="POST" enctype="multipart/form-data" action="{{ endpoint }}">
-        <input type="hidden" name="access_token" value="{{ access_token }}" />
+      <form method="POST" enctype="multipart/form-data" action="{{ url_for('api.publish') }}">
         <input type="hidden" name="h" value="entry" />
         <div class="row">
           <div class="two-thirds column">
@@ -125,6 +124,23 @@
             newItemName: 'category'
           });
         });
+
+        class MicropubClient {
+          constructor( endpoint, access_token, config ) {
+            this.endpoint = endpoint;
+            this.access_token = access_token;
+            this.config = config;
+          }
+
+          // TODO: upload a file (from a file input) to the micropub endpoint,
+          // if supported. do nothing if not supported?
+
+          // TODO: bundle up the form and submit to the micropub endpoint.
+          // handle HTTP return codes.
+          // success: 200 (w/ content), 201 (Created), 204 (no content)
+          // auth errors: 401, 403
+          // other errors: 400 (Bad Request)
+        }
       </script>
     </div>
 </div>

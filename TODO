@@ -1,0 +1,4 @@
+- Disable submit once begun since uploads take a while
+- Add photo support
+- Post through proxy
+- Media endpoint support
