@@ -49,17 +49,17 @@
             </div>
           </div>
           <div class="one-third column">
-            <dl id="whta-auto-fields"></dl>
+            <dl id="id3-auto-fields"></dl>
           </div>
         </div>
       </form>
       <script>
         document.addEventListener("DOMContentLoaded", function(){
           function addAutoField(name, label, value) {
-            var par = document.getElementById("whta-auto-fields");
+            var par = document.getElementById("id3-auto-fields");
             var tmpl = `<div>
                 <dt>${label}</dt><dd>${value}</dd>
-                <input type="hidden" name="whta-${name}" value="${value}" />
+                <input type="hidden" name="id3-${name}" value="${value}" />
               </div>
             `;
             var el = document.createElement('div');
