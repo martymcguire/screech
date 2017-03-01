@@ -43,7 +43,8 @@
             </div>
           </div>
           <div class="one-third column">
-            <dl id="id3-auto-fields"></dl>
+            <strong>Audio File Metadata</strong>
+            <div id="id3-auto-fields"></div>
           </div>
         </div>
       </form>
@@ -52,8 +53,8 @@
           function addAutoField(name, label, value) {
             var par = document.getElementById("id3-auto-fields");
             var tmpl = `<div>
-                <dt>${label}</dt><dd>${value}</dd>
-                <input type="hidden" name="id3-${name}" value="${value}" />
+                <label for="id3-${name}">${label}</label>
+                <input type="text" name="id3-${name}" value="${value}" />
               </div>
             `;
             var el = document.createElement('div');
@@ -82,7 +83,7 @@
             "canplaythrough",
             function(e){
               var duration = secsToDurationString(e.currentTarget.duration);
-              addAutoField("duration","Duration", duration);
+              addAutoField("duration","Duration (HH:MM:SS)", duration);
             }
           );
           document.getElementById("audio").addEventListener(
@@ -96,7 +97,7 @@
                 onSuccess: function(info) {
                   console.log(info);
                   var tags = info.tags;
-                  document.getElementById("name").value = tags.album + ' ' + tags.title;
+                  document.getElementById("name").value = tags.album + ' • ' + tags.title;
                   for (field of ['artist', 'album', 'title', 'track']) {
                     addAutoField(
                       field,
@@ -104,7 +105,7 @@
                       tags[field]
                     );
                   }
-                  addAutoField("enclosure-length", "Size", file.size);
+                  addAutoField("enclosure-length", "Size (bytes)", file.size);
                 },
                 onError: function(err) {
                   console.log(err.type, err.info);
