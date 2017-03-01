@@ -14,8 +14,7 @@
 {% endblock %}
 {% block body %}
 <div class="container">
-      <h2>We Have to Cast</h2>
-      <h3>Logged in as {{ me }}</h3>
+      <h3>Logged in as <strong>{{ me }}</strong></h3>
       <form method="POST" enctype="multipart/form-data" action="{{ url_for('api.publish') }}">
         <input type="hidden" name="h" value="entry" />
         <div class="row">
