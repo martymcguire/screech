@@ -19,7 +19,7 @@
         <input type="hidden" name="h" value="entry" />
         <div class="row">
           <div class="two-thirds column">
-            <div class="container">
+            <div>
               <div class="row">
                 <label for="audio">Audio File</label>
                 <input type="file" name="audio" id="audio" />
@@ -54,7 +54,7 @@
             var par = document.getElementById("id3-auto-fields");
             var tmpl = `<div>
                 <label for="id3-${name}">${label}</label>
-                <input type="text" name="id3-${name}" value="${value}" />
+                <input class="ut-full-width" type="text" name="id3-${name}" value="${value}" />
               </div>
             `;
             var el = document.createElement('div');
