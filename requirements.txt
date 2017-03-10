@@ -1,2 +1,2 @@
 Flask==0.12
-flask-micropub==0.2.6
+-e git://github.com/martymcguire/flask-micropub.git#egg=flask-micropub
