@@ -21,6 +21,9 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/screech.css') }}">
+
+  <link rel="icon" href="{{ url_for('static', filename='images/screech-icon.png') }}" sizes="128x128" type="image/png">
 
   {% block head %}{% endblock %}
 </head>
@@ -28,7 +31,9 @@
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="container"><h2>Screech - a <a href="https://www.w3.org/TR/micropub/">Micropub</a> client for podcasts</h2></div>
+  <header class="container">
+  <h2><a href="{{ url_for('views.new') }}"><img class="logo" src="{{ url_for('static', filename='images/screech-icon.svg') }}" /></a> Screech - a <a href="https://www.w3.org/TR/micropub/">Micropub</a> client for podcasts</h2>
+  </header>
   {% block body %}{% endblock %}
 
 <!-- End Document

@@ -1,0 +1,8 @@
+.logo {
+  float: left;
+  margin-right: 1rem;
+  max-height: 5rem;
+}
+header.container h2 {
+  margin-top: 1rem;
+}
