@@ -44,22 +44,31 @@
           </div>
           <div class="one-third column">
             <strong>Audio File Metadata</strong>
-            <div id="id3-auto-fields"></div>
+            <div id="id3-auto-fields">
+              {% set id3_fields = (
+                ("enclosure-length", "Size (bytes)"),
+                ("duration", "Duration (HH:MM:SS)"),
+                ("artist", "Artist"),
+                ("album", "Album"),
+                ("title", "Title"),
+                ("track", "Track Number"),
+              ) %}
+              {% for (field, label) in id3_fields %}
+                <div>
+                  <label for="id3-{{ field }}">{{ label }}
+                    <input class="util-full-width" type="text" id="id3-{{ field }}" name="id3-{{ field }}" value="" />
+                  </label>
+                </div>
+              {% endfor %}
+            </div>
           </div>
         </div>
       </form>
       <script>
         document.addEventListener("DOMContentLoaded", function(){
-          function addAutoField(name, label, value) {
-            var par = document.getElementById("id3-auto-fields");
-            var tmpl = `<div>
-                <label for="id3-${name}">${label}</label>
-                <input class="ut-full-width" type="text" name="id3-${name}" value="${value}" />
-              </div>
-            `;
-            var el = document.createElement('div');
-            el.innerHTML = tmpl;
-            par.appendChild(el.firstChild);
+          function setAutoField(name, value) {
+            var input = document.querySelector("input#id3-" + name);
+            input.value = value;
           }
 
           function secsToDurationString(time) {
@@ -83,7 +92,7 @@
             "canplaythrough",
             function(e){
               var duration = secsToDurationString(e.currentTarget.duration);
-              addAutoField("duration","Duration (HH:MM:SS)", duration);
+              setAutoField("duration", duration);
             }
           );
           document.getElementById("audio").addEventListener(
@@ -99,13 +108,9 @@
                   var tags = info.tags;
                   document.getElementById("name").value = tags.album + ' • ' + tags.title;
                   for (field of ['artist', 'album', 'title', 'track']) {
-                    addAutoField(
-                      field,
-                      field.charAt(0).toUpperCase() + field.slice(1),
-                      tags[field]
-                    );
+                    setAutoField( field, tags[field]);
                   }
-                  addAutoField("enclosure-length", "Size (bytes)", file.size);
+                  setAutoField("enclosure-length", file.size);
                 },
                 onError: function(err) {
                   console.log(err.type, err.info);
