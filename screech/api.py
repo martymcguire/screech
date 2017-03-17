@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session, redirect
+from flask import Blueprint, request, session, redirect, current_app
 from .auth import login_required
 import requests
 
@@ -27,6 +27,8 @@ def publish():
       data[k] = request.form.getlist(k)
 
     headers = { 'Authorization': "Bearer %s" % session.get('_micropub_access_token') }
+
+    current_app.logger.debug([endpoint, headers, data, files])
 
     r = requests.post(
       endpoint,
