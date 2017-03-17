@@ -24,7 +24,9 @@ def publish():
     # iterate over keys to allow multiple values from Flask multidict
     data = {}
     for k in request.form.keys():
-      data[k] = request.form.getlist(k)
+      values = request.form.getlist(k)
+      if values != ['']:
+        data[k] = values
 
     headers = { 'Authorization': "Bearer %s" % session.get('_micropub_access_token') }
 
