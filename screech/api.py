@@ -37,7 +37,7 @@ def publish():
 
     # check for a 201 or 202 and Location: header for success
     # redirect to Location!
-    if (r.status_code == requests.codes.created) or (r.status_code == request.codes.accepted):
+    if (r.status_code == requests.codes.created) or (r.status_code == requests.codes.accepted):
       return redirect(r.headers.get('location'))
     else:
       return "Micropub endpoint did not return a Location. %s" % r.text
