@@ -17,7 +17,7 @@ def publish():
         if f.filename != '':
           # TODO: if media endpoint, upload there and replace value w/ URL
           # otherwise, pass the file along to the micropub endpoint
-          files[file_key] = (f.filename, f, f.mimetype)
+          files[file_key] = (f.filename, f.stream, f.mimetype)
 
     # TODO: data validation?
 
