@@ -1,8 +1,14 @@
-Screech
-=======
+Screech (has moved)
+===================
 
 Screech is a [micropub](https://www.w3.org/TR/micropub/) client for posting
 audio content (such as podcasts) to your website.
+
+It's been reworked from Python to PHP and the new source lives at: https://git.schmarty.net/schmarty/screech-php
+
+As of 2023, Screech can be found at: https://screech.bayside.pub/
+
+This repository has been archived due to security updates for Flask that I don't intend to apply, as I'm no longer maintaining this version of Screech.
 
 Quick (&amp; Dirty) Start
 -------------------------
