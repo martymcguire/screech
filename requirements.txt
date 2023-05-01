@@ -1,2 +1,2 @@
-Flask==1.0
+Flask==2.3.2
 -e git://github.com/martymcguire/flask-micropub.git#egg=flask-micropub
